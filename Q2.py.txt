@@ -1,0 +1,27 @@
+#Q2
+import numpy as np
+import cv2 as cv
+import matplotlib.pyplot as plt
+
+img = cv.imread("BrainProtonDensitySlice9.png",cv.IMREAD_GRAYSCALE)
+assert img is not None
+
+a1 = np.linspace(0,0,206).astype('uint8')
+a2= np.linspace(255,255,50).astype('uint8')
+a3 = np.linspace(0,0,70).astype('uint8')
+a4 = np.linspace(255,255,101).astype('uint8')
+a5 = np.linspace(0,0,85).astype('uint8')
+
+white_m_enhanced = np.concatenate((a1,a2),axis=0).astype('uint8')
+gray_m_enhanced = np.concatenate((a3,a4,a5),axis=0).astype('uint8')
+
+img_2= cv.LUT(f,white_m_enhanced)
+img_3= cv.LUT(f,gray_m_enhanced)
+
+fig, ax = plt.subplots(1,5,figsize=(18,18))
+ax[0].plot(t), ax[0].set_aspect('equal'), ax[0].set_title("Intensity transformation \n graph for white matter")
+ax[1].plot(s), ax[1].set_aspect('equal'), ax[1].set_title("Intensity transformation \n graph for gray matter")
+ax[2].imshow(cv.cvtColor(img,cv.COLOR_BGR2RGB)), ax[2].axis('off'), ax[2].set_title("Original Image")
+ax[3].imshow(cv.cvtColor(img_2,cv.COLOR_BGR2RGB)), ax[3].axis('off'), ax[3].set_title("White Matter Enhanced")
+ax[4].imshow(cv.cvtColor(img_3,cv.COLOR_BGR2RGB)), ax[4].axis('off'), ax[4].set_title("Gray Matter Enhaced")
+plt.show()
